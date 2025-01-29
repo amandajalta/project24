@@ -1,5 +1,5 @@
-Data Science project – a. y. 2023/2024
-"Data BARK" members:
+# Data Science project – a. y. 2023/2024 #
+# "Data BARK" members:
 
 Benjamin Kollmar [benjamin.kollmar@studio.unibo.it]
 Amanda Altamirano [amanda.altamirano@studio.unibo.it]
