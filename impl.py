@@ -23,7 +23,7 @@ def find_file(filename, search_path="/"):  # start search from the system root
 BLAZEGRAPH_ENDPOINT = 'http://127.0.0.1:9999/blazegraph/sparql'
 CSV_FILEPATH = 'data/meta.csv'
 
-class IdentifiableEntity(object): #Rubens
+class IdentifiableEntity(object):  
     def __init__(self, id: str):
         self.id = id
 
@@ -31,7 +31,7 @@ class IdentifiableEntity(object): #Rubens
         return self.id
 
 
-class Person(IdentifiableEntity):  # Rubens
+class Person(IdentifiableEntity):   
     def __init__(self, id: str, name: str):
         self.name = name
         super().__init__(id)
@@ -40,7 +40,7 @@ class Person(IdentifiableEntity):  # Rubens
         return self.name
 
 
-class CulturalHeritageObject(IdentifiableEntity):  # Ben
+class CulturalHeritageObject(IdentifiableEntity):   
     def __init__(
         self,
         id: str,
@@ -125,7 +125,7 @@ class Map(CulturalHeritageObject):
     pass
 
 
-class Activity(object):  # Rubens
+class Activity(object):   
     def __init__(
         self,
         refersTo: CulturalHeritageObject,
@@ -206,7 +206,7 @@ class Exporting(Activity):
     pass
 
 
-class Handler(object):  # Ekaterina
+class Handler(object):   
     def __init__(self):
         self.dbPathOrUrl = ""
 
@@ -218,7 +218,7 @@ class Handler(object):  # Ekaterina
         return self.dbPathOrUrl == pathOrUrl
 
 
-class UploadHandler(Handler):  # Ekaterina
+class UploadHandler(Handler):   
     def __init__(self):
         super().__init__()
 
@@ -307,7 +307,7 @@ class UploadHandler(Handler):  # Ekaterina
         return True
 
 
-class ProcessDataUploadHandler(UploadHandler):  # Ekaterina
+class ProcessDataUploadHandler(UploadHandler):   
     def __init__(self):
         super().__init__()
         self.file_path = find_file('process.json')
@@ -472,7 +472,7 @@ class ProcessDataUploadHandler(UploadHandler):  # Ekaterina
 
 
 
-class MetadataUploadHandler(UploadHandler):  # Ekaterina
+class MetadataUploadHandler(UploadHandler):   
     def __init__(self):
         super().__init__()
         self.my_graph = Graph()
@@ -639,7 +639,7 @@ class QueryHandler(Handler):
     def __init__(self):
         super().__init__()
 
-    def getById(self, input_id: str) -> pd.DataFrame:  # Ekaterina/Rubens
+    def getById(self, input_id: str) -> pd.DataFrame:   /Rubens
         endpoint = self.blazegraph_endpoint
         id_author_query = f"""
         PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -663,7 +663,7 @@ class MetadataQueryHandler(QueryHandler):
         self.blazegraph_endpoint = BLAZEGRAPH_ENDPOINT
         self.csv_file_path = CSV_FILEPATH
 
-    def getAllPeople(self) -> pd.DataFrame:  # Rubens
+    def getAllPeople(self) -> pd.DataFrame:   
         sparql_query = """
         PREFIX schema: <https://schema.org/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -678,7 +678,7 @@ class MetadataQueryHandler(QueryHandler):
         df_sparql = get(self.blazegraph_endpoint, sparql_query, True)
         return df_sparql
 
-    def getAllCulturalHeritageObjects(self) -> pd.DataFrame:  # Ekaterina
+    def getAllCulturalHeritageObjects(self) -> pd.DataFrame:   
         endpoint = self.blazegraph_endpoint
         cultural_object_query = """
         PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -716,7 +716,7 @@ class MetadataQueryHandler(QueryHandler):
         df_sparql = get(endpoint, cultural_object_query, True)
         return df_sparql
 
-    def getAuthorsOfCulturalHeritageObject(self, input_id) -> pd.DataFrame:  # Rubens
+    def getAuthorsOfCulturalHeritageObject(self, input_id) -> pd.DataFrame:   
         endpoint = self.blazegraph_endpoint
         id_author_query = f"""
         PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -736,7 +736,7 @@ class MetadataQueryHandler(QueryHandler):
 
     def getCulturalHeritageObjectsAuthoredBy(
         self, input_id
-    ) -> pd.DataFrame:  # Ekaterina
+    ) -> pd.DataFrame:   
         endpoint = self.blazegraph_endpoint
         id_cultural_query = f"""
         PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -784,10 +784,10 @@ class ProcessDataQueryHandler(QueryHandler):
     def __init__(self):
         super().__init__()
 
-    def getById(self, id: str):  # Rubens
+    def getById(self, id: str):   
         return pd.DataFrame()
 
-    def getAllActivities(self) -> pd.DataFrame:  # Rubens
+    def getAllActivities(self) -> pd.DataFrame:   
         db_file = "json.db"
         try:
             conn = sqlite3.connect(db_file)
@@ -814,7 +814,7 @@ class ProcessDataQueryHandler(QueryHandler):
 
     def getActivitiesByResponsibleInstitution(
         self, institution_str: str
-    ) -> pd.DataFrame:  # Ekaterina
+    ) -> pd.DataFrame:   
         db_file = "json.db"
         try:
             conn = sqlite3.connect(db_file)
@@ -845,7 +845,7 @@ class ProcessDataQueryHandler(QueryHandler):
 
     def getActivitiesByResponsiblePerson(
         self, responsible_person_str: str
-    ) -> pd.DataFrame:  # Ben
+    ) -> pd.DataFrame:   
         db_file = "json.db"
         try:
             conn = sqlite3.connect(db_file)
@@ -873,7 +873,7 @@ class ProcessDataQueryHandler(QueryHandler):
         finally:
             conn.close()
 
-    def getActivitiesUsingTool(self, tool_str: str) -> pd.DataFrame:  # Rubens
+    def getActivitiesUsingTool(self, tool_str: str) -> pd.DataFrame:   
         db_file = "json.db"
 
         try:
@@ -902,7 +902,7 @@ class ProcessDataQueryHandler(QueryHandler):
         finally:
             conn.close()
 
-    def getActivitiesStartedAfter(self, start_date: str) -> pd.DataFrame:  # Amanda
+    def getActivitiesStartedAfter(self, start_date: str) -> pd.DataFrame:   
         db_file = "json.db"
 
         try:
@@ -935,7 +935,7 @@ class ProcessDataQueryHandler(QueryHandler):
         finally:
             conn.close()
 
-    def getActivitiesEndedBefore(self, end_date: str) -> pd.DataFrame:  # Amanda
+    def getActivitiesEndedBefore(self, end_date: str) -> pd.DataFrame:   
         db_file = "json.db"
 
         try:
@@ -960,7 +960,7 @@ class ProcessDataQueryHandler(QueryHandler):
         finally:
             conn.close()
 
-    def getAcquisitionsByTechnique(self, technique_str: str) -> pd.DataFrame:  # Rubens
+    def getAcquisitionsByTechnique(self, technique_str: str) -> pd.DataFrame:   
         db_file = "json.db"
         try:
             conn = sqlite3.connect(db_file)
@@ -986,27 +986,27 @@ class BasicMashup(object):
         self,
         metadataQuery: List[MetadataQueryHandler],
         processQuery: List[ProcessDataQueryHandler],
-    ) -> None:  # Rubens
+    ) -> None:   
         self.metadataQuery = metadataQuery if metadataQuery is not None else []
         self.processQuery = processQuery if processQuery is not None else []
 
-    def cleanMetadataHandlers(self) -> bool:  # Rubens
+    def cleanMetadataHandlers(self) -> bool:   
         self.metadataQuery.clear()
         return True
 
-    def cleanProcessHandlers(self) -> bool:  # Rubens
+    def cleanProcessHandlers(self) -> bool:   
         self.processQuery.clear()
         return True
 
-    def addMetadataHandler(self, handler: MetadataQueryHandler) -> bool:  # Rubens
+    def addMetadataHandler(self, handler: MetadataQueryHandler) -> bool:   
         self.metadataQuery.append(handler)
         return True
 
-    def addProcessHandler(self, handler: ProcessDataQueryHandler) -> bool:  # Rubens
+    def addProcessHandler(self, handler: ProcessDataQueryHandler) -> bool:   
         self.processQuery.append(handler)
         return True
 
-    def getEntityById(self, id: str) -> IdentifiableEntity | None:  # Rubens
+    def getEntityById(self, id: str) -> IdentifiableEntity | None:   
         id_entity: List[Person] = []
         processed_ids = set()  # Set to keep track of processed IDs
 
@@ -1030,7 +1030,7 @@ class BasicMashup(object):
             
         return id_entity
 
-    def getAllPeople(self) -> List[Person]:  # Ben/Rubens
+    def getAllPeople(self) -> List[Person]:   /Rubens
         all_people: List[Person] = []
         processed_ids = set()  # Set to keep track of processed IDs
 
@@ -1053,7 +1053,7 @@ class BasicMashup(object):
 
     def getAllCulturalHeritageObjects(
         self,
-    ) -> List[CulturalHeritageObject]:  # Ekaterina
+    ) -> List[CulturalHeritageObject]:   
         objects_list = []
         df = pd.DataFrame()
 
@@ -1118,7 +1118,7 @@ class BasicMashup(object):
 
     def getAuthorsOfCulturalHeritageObject(
         self, object_id: str
-    ) -> List[Person]:  # Ekaterina
+    ) -> List[Person]:   
         authors_list = []
 
         for metadata_qh in self.metadataQuery:
@@ -1133,7 +1133,7 @@ class BasicMashup(object):
 
     def getCulturalHeritageObjectsAuthoredBy(
         self, input_id: str
-    ) -> List[CulturalHeritageObject]:  # Ekaterina
+    ) -> List[CulturalHeritageObject]:   
         objects_list = []
         df = pd.DataFrame()
 
@@ -1198,7 +1198,7 @@ class BasicMashup(object):
 
         return objects_list
 
-    def getAllActivities(self) -> List[Activity]:  # Ben/Ekaterina
+    def getAllActivities(self) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1290,7 +1290,7 @@ class BasicMashup(object):
 
     def getActivitiesByResponsibleInstitution(
         self, institute_name: str
-    ) -> List[Activity]:  # Ben/Ekaterina
+    ) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1385,7 +1385,7 @@ class BasicMashup(object):
 
     def getActivitiesByResponsiblePerson(
         self, person_name: str
-    ) -> List[Activity]:  # Ben/Ekaterina
+    ) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1478,7 +1478,7 @@ class BasicMashup(object):
 
         return all_activities
 
-    def getActivitiesUsingTool(self, tool_name: str) -> List[Activity]:  # Ben/Ekaterina
+    def getActivitiesUsingTool(self, tool_name: str) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1574,7 +1574,7 @@ class BasicMashup(object):
 
     def getActivitiesStartedAfter(
         self, date: str
-    ) -> List[Activity]:  # Amanda/Ekaterina
+    ) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1665,7 +1665,7 @@ class BasicMashup(object):
 
         return all_activities
 
-    def getActivitiesEndedBefore(self, date: str) -> List[Activity]:  # Amanda/Ekaterina
+    def getActivitiesEndedBefore(self, date: str) -> List[Activity]:   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1756,7 +1756,7 @@ class BasicMashup(object):
 
         return all_activities
 
-    def getAcquisitionsByTechnique(self, technique: str):  # Amanda/Ekaterina
+    def getAcquisitionsByTechnique(self, technique: str):   /Ekaterina
         all_activities = []
         activities_df = pd.DataFrame()
 
@@ -1818,7 +1818,7 @@ class AdvancedMashup(BasicMashup):
         
     def getActivitiesOnObjectsAuthoredBy(
         self, author_id: str
-    ) -> list[Activity]:  # Rubens
+    ) -> list[Activity]:   
         related_cultural_heritage_objects = self.metadataQuery[0].getCulturalHeritageObjectsAuthoredBy(author_id)
 
         related_ids = set(related_cultural_heritage_objects["id"])
@@ -1842,7 +1842,7 @@ class AdvancedMashup(BasicMashup):
 
     def getObjectsHandledByResponsiblePerson(
         self, responsible_person: str
-    ) -> List[CulturalHeritageObject]:  # Ekaterina
+    ) -> List[CulturalHeritageObject]:   
         all_objects = []
         if len(self.processQuery) > 0:
             activities_df = self.processQuery[0].getActivitiesByResponsiblePerson(
@@ -2067,7 +2067,7 @@ class AdvancedMashup(BasicMashup):
 
     def getObjectsHandledByResponsibleInstitution(
         self, institute_name: str
-    ) -> List[CulturalHeritageObject]:  # Ekaterina
+    ) -> List[CulturalHeritageObject]:   
         all_objects = []
         activities_df = pd.DataFrame()
 
@@ -2294,7 +2294,7 @@ class AdvancedMashup(BasicMashup):
 
     def getAuthorsOfObjectsAcquiredInTimeFrame(
         self, start_date: str, end_date: str
-    ) -> list[Person]:  # Rubens
+    ) -> list[Person]:   
         acquired_authors = []
 
         activities_started = self.processQuery[0].getActivitiesStartedAfter(start_date)
